@@ -190,15 +190,15 @@ class _MyHomePageState extends State<MyHomePage> {
       backgroundColor: const Color(0xFFf2f5f8),
       currentIndex: _currentIndex,
       onTap: (index) {
-      if (index == 2) {
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => SwapNowPage()),
-        );
-      } else {
-        setState(() => _currentIndex = index);
-      }
-    },
+        if (index == 2) {
+          Navigator.push(
+            context,
+            MaterialPageRoute(builder: (context) => SwapNowPage()),
+          );
+        } else {
+          setState(() => _currentIndex = index);
+        }
+      },
       unselectedItemColor: const Color(0xFF3c3c3c),
       selectedItemColor: const Color(0xFF3c3c3c),
       selectedLabelStyle: TextStyle(

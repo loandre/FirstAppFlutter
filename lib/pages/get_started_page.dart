@@ -64,7 +64,7 @@ class GetStartedPage extends StatelessWidget {
     return Padding(
       padding: _buttonPadding,
       child: ElevatedButton(
-        onPressed:  () => _navigateToHomePage(context),
+        onPressed: () => _navigateToHomePage(context),
         style: _buttonStyle,
         child: Container(
           decoration: _buttonDecoration,
