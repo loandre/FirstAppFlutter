@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 import 'home_page.dart';
 
 class GetStartedPage extends StatelessWidget {
@@ -38,12 +39,14 @@ class GetStartedPage extends StatelessWidget {
   Widget _buildTitleWithStarIcon() {
     return Stack(
       children: [
-        Padding(
+        const Padding(
           padding: _titlePadding,
-          child: Text(
+          child: AutoSizeText(
             'Manage your\ncrypto assets,\nsimply',
             textAlign: TextAlign.left,
             style: _titleStyle,
+            maxLines: 3,
+            minFontSize: 20,
           ),
         ),
         Positioned(
@@ -65,9 +68,9 @@ class GetStartedPage extends StatelessWidget {
           decoration: _buttonDecoration,
           child: Container(
             alignment: Alignment.center,
-            constraints: BoxConstraints(minHeight: 70.0),
+            constraints: const BoxConstraints(minHeight: 70.0),
             width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 40.0),
+            padding: const EdgeInsets.symmetric(horizontal: 40.0),
             child: _buildButtonContent(),
           ),
         ),
@@ -83,11 +86,13 @@ class GetStartedPage extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Text(
+              const AutoSizeText(
                 'Get started',
                 style: _buttonTextStyle,
+                maxLines: 1,
+                minFontSize: 18,
               ),
-              SizedBox(width: 9.0),
+              const SizedBox(width: 9.0),
               Center(
                 child: SizedBox(
                   width: 24.0,
@@ -134,7 +139,7 @@ class GetStartedPage extends StatelessWidget {
     ),
   );
   static final _buttonDecoration = BoxDecoration(
-    gradient: LinearGradient(
+    gradient: const LinearGradient(
       colors: [Color(0xFF90A9DD), Color(0xFF827EDA)],
       begin: Alignment.centerLeft,
       end: Alignment.centerRight,

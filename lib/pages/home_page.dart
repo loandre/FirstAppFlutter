@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:auto_size_text/auto_size_text.dart';
 
 const _defaultPaddingValue = 16.0;
-
 const _backgroundGradientColors = [
   Color(0xFF1b323f),
-  Color(0xFFd4dbda),
+  Color(0xFFa8c0ce),
   Color(0xFF7990bc),
 ];
-const _backgroundGradientStops = [0.0, 0.8, 1.0];
-
+const _backgroundGradientStops = [0.0, 0.6, 1.0];
 const _gradientColors = [
   Color(0xFF90A9DD),
   Color(0xFF827EDA),
@@ -26,54 +25,51 @@ class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
 
   @override
-Widget build(BuildContext context) {
-  return ScaffoldMessenger(
-    key: _scaffoldMessengerKey,
-     child: Scaffold(
-      backgroundColor: Colors.transparent,
-      body: SafeArea(
-        child: Column(
-          children: [
-            Expanded(
-              child: Container(
-                decoration: _backgroundDecoration(),
+  Widget build(BuildContext context) {
+    return ScaffoldMessenger(
+      key: _scaffoldMessengerKey,
+      child: Scaffold(
+        backgroundColor: Colors.transparent,
+        body: Container(
+          decoration: _backgroundDecoration(),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(_defaultPaddingValue),
                 child: Column(
                   children: [
                     _buildTopBar(),
-                    SizedBox(height: 70),
+                    const SizedBox(height: 70),
                     _buildMiddleContent(),
                     _buildStatisticBoxes(),
-                    SizedBox(height: 20),
+                    const SizedBox(height: 20),
                   ],
                 ),
               ),
-            ),
-            _buildPortfolio(),
-          ],
+              Flexible(child: _buildPortfolio()),
+            ],
+          ),
         ),
+        bottomNavigationBar: _buildBottomNavigationBar(),
       ),
-      bottomNavigationBar: _buildBottomNavigationBar(),
-    ),
-  );
-}
-
+    );
+  }
 
   Widget _buildPortfolio() {
     return Container(
-      margin: EdgeInsets.only(top: 30.0),
-      padding: EdgeInsets.all(_defaultPaddingValue),
-      decoration: BoxDecoration(
+      padding: const EdgeInsets.all(_defaultPaddingValue),
+      decoration: const BoxDecoration(
         color: Colors.white,
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(14),
-          topRight: Radius.circular(14),
+          topLeft: Radius.circular(30),
+          topRight: Radius.circular(30),
         ),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          SizedBox(height: 30),
-          Row(
+          const SizedBox(height: 30),
+          const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Portfolio',
@@ -81,8 +77,12 @@ Widget build(BuildContext context) {
               Icon(Icons.more_vert, size: 28),
             ],
           ),
-          SizedBox(height: 15),
-          ..._buildPortfolioItems(),
+          const SizedBox(height: 15),
+          Expanded(
+            child: ListView(
+              children: _buildPortfolioItems(),
+            ),
+          ),
         ],
       ),
     );
@@ -97,7 +97,7 @@ Widget build(BuildContext context) {
     ];
     final titles = ['LTC', 'BNB', 'ETH', 'LINK'];
     final subtitles = ['Litecoin', 'Binance Coin', 'Ethereum', 'Chainlink'];
-    final values = ['23.21', '45.12', '1,200.43', '30.05'];
+    final values = ['23.21', '3.5', '9.14', '65.5'];
     final details = [
       '1,571.5 USD (+1.9%)',
       '1,114.29 USD (+4.8%)',
@@ -109,21 +109,22 @@ Widget build(BuildContext context) {
     for (int i = 0; i < titles.length; i++) {
       portfolioItems.add(
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 10.0),
+          padding: const EdgeInsets.symmetric(vertical: 10.0),
           child: Row(
             children: [
               Image.asset(iconPaths[i], width: 40, height: 40),
-              SizedBox(width: 12.0),
+              const SizedBox(width: 12.0),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(titles[i],
-                        style: TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 18)),
-                    SizedBox(height: 2.0),
+                        style: const TextStyle(
+                            fontWeight: FontWeight.bold, fontSize: 19)),
+                    const SizedBox(height: 2.0),
                     Text(subtitles[i],
-                        style: TextStyle(color: Colors.grey, fontSize: 14)),
+                        style:
+                            const TextStyle(color: Color(0xFF282828), fontSize: 14)),
                   ],
                 ),
               ),
@@ -131,14 +132,14 @@ Widget build(BuildContext context) {
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
                   Text(values[i],
-                      style:
-                          TextStyle(fontWeight: FontWeight.bold, fontSize: 18)),
-                  SizedBox(height: 2.0),
+                      style: const TextStyle(
+                          fontWeight: FontWeight.bold, fontSize: 19)),
+                  const SizedBox(height: 2.0),
                   Text(details[i],
                       style: TextStyle(color: Colors.grey[400], fontSize: 14)),
                 ],
               ),
-              SizedBox(width: 8.0),
+              const SizedBox(width: 8.0),
             ],
           ),
         ),
@@ -152,17 +153,26 @@ Widget build(BuildContext context) {
 
   BottomNavigationBar _buildBottomNavigationBar() {
     return BottomNavigationBar(
+      backgroundColor: const Color(0xFFf2f5f8),
       currentIndex: _currentIndex,
       onTap: (index) => setState(() => _currentIndex = index),
-      unselectedItemColor: Color(0xFF3c3c3c),
+      unselectedItemColor: const Color(0xFF3c3c3c),
+      selectedItemColor: const Color(0xFF3c3c3c),
+      selectedLabelStyle: TextStyle(
+        foreground: Paint()..shader = _gradientTextShader(),
+      ),
+      unselectedLabelStyle: TextStyle(color: const Color(0xFF3c3c3c)),
+      showSelectedLabels: true,
+      showUnselectedLabels: true,
       items: [
-        _buildNavBarItem(Icons.home, 'Home'),
-        _buildNavBarItem(Icons.show_chart, 'Trade'),
+        _buildNavBarItem(iconData: Icons.home_filled, label: 'Home'),
+        _buildNavBarItem(
+            imagePath: 'lib/icons/show_chart_nav.png', label: 'Trade'),
         BottomNavigationBarItem(
           icon: Container(
-            padding: EdgeInsets.all(10),
+            padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              gradient: LinearGradient(
+              gradient: const LinearGradient(
                 colors: _gradientColors,
                 begin: Alignment.topLeft,
                 end: Alignment.bottomRight,
@@ -174,16 +184,38 @@ Widget build(BuildContext context) {
           ),
           label: '',
         ),
-        _buildNavBarItem(Icons.view_module, 'Pools'),
-        _buildNavBarItem(Icons.person, 'Profile'),
+        _buildNavBarItem(imagePath: 'lib/icons/pool_icon.png', label: 'Pools'),
+        _buildNavBarItem(
+            iconData: Icons.person_outline_rounded, label: 'Profile'),
       ],
     );
   }
 
-  BottomNavigationBarItem _buildNavBarItem(IconData icon, String label) {
+  Shader _gradientTextShader() {
+    return LinearGradient(
+      colors: _gradientColors,
+      begin: Alignment.topLeft,
+      end: Alignment.bottomRight,
+    ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
+  }
+
+  BottomNavigationBarItem _buildNavBarItem(
+      {IconData? iconData, String? imagePath, required String label}) {
     return BottomNavigationBarItem(
-      icon: Icon(icon),
-      activeIcon: _gradientIcon(icon),
+      icon: Padding(
+        padding:
+            const EdgeInsets.only(bottom: 4.0), // Adicionando espaçamento aqui
+        child: iconData != null
+            ? Icon(iconData)
+            : Image.asset(imagePath!, width: 24, height: 24),
+      ),
+      activeIcon: Padding(
+        padding:
+            const EdgeInsets.only(bottom: 4.0), // Adicionando espaçamento aqui
+        child: iconData != null
+            ? _gradientIcon(iconData)
+            : _gradientImage(imagePath!),
+      ),
       label: label,
     );
   }
@@ -191,7 +223,7 @@ Widget build(BuildContext context) {
   Widget _gradientIcon(IconData data) {
     return ShaderMask(
       shaderCallback: (bounds) {
-        return LinearGradient(
+        return const LinearGradient(
           colors: _gradientColors,
           begin: Alignment.topLeft,
           end: Alignment.bottomRight,
@@ -201,11 +233,24 @@ Widget build(BuildContext context) {
     );
   }
 
+  Widget _gradientImage(String imagePath) {
+    return ShaderMask(
+      shaderCallback: (bounds) {
+        return const LinearGradient(
+          colors: _gradientColors,
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+        ).createShader(bounds);
+      },
+      child: Image.asset(imagePath, color: Colors.white, width: 24, height: 24),
+    );
+  }
+
   Widget _buildTopBar() {
     return Padding(
-      padding: EdgeInsets.fromLTRB(
+      padding: const EdgeInsets.fromLTRB(
         _defaultPaddingValue,
-        55.0,
+        54.0,
         _defaultPaddingValue,
         0.0,
       ),
@@ -222,10 +267,10 @@ Widget build(BuildContext context) {
   Widget _buildCopyWidget() {
     return InkWell(
       onTap: () {
-        Clipboard.setData(ClipboardData(text: 'Oxf8...b21'));
+        Clipboard.setData(const ClipboardData(text: 'Oxf8...b21'));
         _scaffoldMessengerKey.currentState?.showSnackBar(
           SnackBar(
-            content: Text('Text copied to clipboard!',
+            content: const Text('Text copied to clipboard!',
                 style: TextStyle(color: Colors.white)),
             backgroundColor: Colors.transparent,
             elevation: 0,
@@ -239,14 +284,14 @@ Widget build(BuildContext context) {
                     .size
                     .width *
                 0.7,
-            shape: RoundedRectangleBorder(),
+            shape: const RoundedRectangleBorder(),
           ),
         );
       },
       child: Container(
-        padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
         decoration: _copyContainerDecoration(),
-        child: Row(
+        child: const Row(
           children: [
             Text('Oxf8...b21', style: TextStyle(color: Colors.white)),
             SizedBox(width: 7),
@@ -258,11 +303,11 @@ Widget build(BuildContext context) {
   }
 
   Widget _buildNotificationIcon() {
-    return Stack(
+    return const Stack(
       alignment: Alignment.topRight,
       children: [
-        Icon(Icons.notifications, size: 24, color: Colors.white),
-        CircleAvatar(radius: 6, backgroundColor: Colors.orange),
+        Icon(Icons.notifications_none_rounded, size: 24, color: Colors.white),
+        CircleAvatar(radius: 5.5, backgroundColor: Colors.orange),
       ],
     );
   }
@@ -270,31 +315,37 @@ Widget build(BuildContext context) {
   Widget _buildMiddleContent() {
     return Column(
       children: [
-        Text('\$ 21,937.31',
-            style: TextStyle(fontSize: 29, fontWeight: FontWeight.bold)),
-        SizedBox(height: 10),
+        const Text('\$ 21,937.31',
+            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+        const SizedBox(height: 10),
         Row(
-  mainAxisAlignment: MainAxisAlignment.center,
-  children: [
-    Image.asset('lib/icons/show_chart.png', width: 20, height: 20, color: Colors.green),
-    SizedBox(width: 5),
-    Text('APY + 7.21', style: TextStyle(fontSize: 14)),
-  ],
-),
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Image.asset(
+              'lib/icons/show_chart.png',
+              width: 20,
+              height: 20,
+              color: const Color(0xFF103611),
+            ),
+            const SizedBox(width: 5),
+            const Text('APY + 7.21',
+                style: TextStyle(fontSize: 14, color: Color(0xFF103611))),
+          ],
+        ),
       ],
     );
   }
 
   Widget _buildStatisticBoxes() {
     return Padding(
-      padding: EdgeInsets.all(_defaultPaddingValue),
+      padding: const EdgeInsets.all(_defaultPaddingValue),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           Expanded(child: _buildStatisticBox('\$7.27', '/24H')),
-          SizedBox(width: 16.0),
+          const SizedBox(width: 16.0),
           Expanded(child: _buildStatisticBox('\$73.81', '/7D')),
-          SizedBox(width: 16.0),
+          const SizedBox(width: 16.0),
           Expanded(child: _buildStatisticBox('\$2,391.30', '/1Y')),
         ],
       ),
@@ -303,13 +354,17 @@ Widget build(BuildContext context) {
 
   Widget _buildStatisticBox(String value, String timeFrame) {
     return Container(
-      margin: EdgeInsets.symmetric(vertical: 8.0),
-      padding: EdgeInsets.all(_defaultPaddingValue),
+      margin: const EdgeInsets.symmetric(vertical: 8.0),
+      padding: const EdgeInsets.all(_defaultPaddingValue),
       decoration: _statisticBoxDecoration(),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(value, style: TextStyle(fontSize: 18, color: Colors.white)),
+          AutoSizeText(
+            value,
+            style: const TextStyle(fontSize: 18.2, color: Colors.white),
+            maxLines: 1,
+          ),
           Text(timeFrame,
               style: TextStyle(color: Colors.white.withOpacity(0.6))),
         ],
@@ -318,7 +373,7 @@ Widget build(BuildContext context) {
   }
 
   BoxDecoration _backgroundDecoration() {
-    return BoxDecoration(
+    return const BoxDecoration(
       gradient: LinearGradient(
         begin: Alignment.topRight,
         end: Alignment.bottomLeft,
