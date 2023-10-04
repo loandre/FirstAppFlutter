@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:auto_size_text/auto_size_text.dart';
 import 'home_page.dart';
 
+// ------------------- MAIN WIDGET -------------------
 class GetStartedPage extends StatelessWidget {
   const GetStartedPage({Key? key}) : super(key: key);
 
@@ -22,6 +23,7 @@ class GetStartedPage extends StatelessWidget {
     );
   }
 
+// ------------------- WIDGET BUILDING METHODS -------------------
   Widget _buildCreditCardImage() {
     return Container(
       margin: _imageMargin,
@@ -62,17 +64,15 @@ class GetStartedPage extends StatelessWidget {
     return Padding(
       padding: _buttonPadding,
       child: ElevatedButton(
-        onPressed: () => _navigateToHomePage(context),
+        onPressed:  () => _navigateToHomePage(context),
         style: _buttonStyle,
         child: Container(
           decoration: _buttonDecoration,
-          child: Container(
-            alignment: Alignment.center,
-            constraints: const BoxConstraints(minHeight: 70.0),
-            width: double.infinity,
-            padding: const EdgeInsets.symmetric(horizontal: 40.0),
-            child: _buildButtonContent(),
-          ),
+          alignment: Alignment.center,
+          constraints: const BoxConstraints(minHeight: 70.0),
+          width: double.infinity,
+          padding: const EdgeInsets.symmetric(horizontal: 40.0),
+          child: _buildButtonContent(),
         ),
       ),
     );
@@ -114,7 +114,7 @@ class GetStartedPage extends StatelessWidget {
     );
   }
 
-  // Style and layout constants
+// ------------------- STYLE AND LAYOUT CONSTANTS -------------------
   static const _backgroundColor = Color(0xFF000E17);
   static const _imageMargin =
       EdgeInsets.only(top: 65.0, left: 20.0, right: 20.0);
