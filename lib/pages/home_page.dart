@@ -7,13 +7,13 @@ import 'swap_now.dart';
 const _defaultPaddingValue = 16.0;
 const _backgroundGradientColors = [
   Color(0xFF153435),
-  Color(0xFF1e484a),
+  Color(0xFF153435),
   Color(0xFFc7e3f2),
-  Color(0xFFeff6fa),
-  Color(0xFF607499),
+  Color(0xFF596d94),
+  Color(0xFFc7e3f2),
   Color(0xFF596d94),
 ];
-const backgroundGradientStops = [0.0, 0.2, 0.3, 0.4, 0.6, 1.0];
+const backgroundGradientStops = [0.0, 0.1, 0.3, 0.4, 0.7, 1.0];
 const _gradientColors = [
   Color(0xFF90A9DD),
   Color(0xFF827EDA),
@@ -45,8 +45,8 @@ class MyHomePageState extends State<MyHomePage> {
       shaderCallback: (bounds) {
         return const LinearGradient(
           colors: _gradientColors,
-          begin: Alignment.topLeft,
-          end: Alignment.bottomRight,
+          begin: Alignment.topRight,
+          end: Alignment.bottomLeft,
         ).createShader(bounds);
       },
       child: Icon(data, color: Colors.white),
@@ -62,7 +62,8 @@ class MyHomePageState extends State<MyHomePage> {
           end: Alignment.bottomRight,
         ).createShader(bounds);
       },
-      child: Image.asset(imagePath, color: Colors.white, width: 24, height: 24),
+      child: Image.asset(imagePath, 
+      color: Colors.white, width: 24, height: 24),
     );
   }
 
@@ -81,6 +82,16 @@ class MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildBody() {
+    double width = MediaQuery.of(context).size.width;
+
+    double topBarSizedBoxHeight = MediaQuery.of(context).size.height * 0.1;
+    double statisticSizedBoxHeight = MediaQuery.of(context).size.height * 0.02;
+
+    if (width >= 720) {
+      topBarSizedBoxHeight = MediaQuery.of(context).size.height * 0.04;
+      statisticSizedBoxHeight = MediaQuery.of(context).size.height * 0.01;
+    }
+
     return Container(
       decoration: _backgroundDecoration(),
       child: Column(
@@ -90,14 +101,15 @@ class MyHomePageState extends State<MyHomePage> {
             child: Column(
               children: [
                 _buildTopBar(),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+                SizedBox(height: topBarSizedBoxHeight),
                 _buildMiddleContent(),
                 _buildStatisticBoxes(),
-                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+                SizedBox(height: statisticSizedBoxHeight),
               ],
             ),
           ),
-          Flexible(child: _buildPortfolio()),
+          Expanded(
+              child: _buildPortfolio()),
         ],
       ),
     );
@@ -125,7 +137,8 @@ class MyHomePageState extends State<MyHomePage> {
     return Column(
       children: [
         const Text('\$ 21,937.31',
-            style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold)),
+            style: TextStyle
+            (fontSize: 32, fontWeight: FontWeight.bold)),
         const SizedBox(height: 10),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -138,7 +151,8 @@ class MyHomePageState extends State<MyHomePage> {
             ),
             const SizedBox(width: 5),
             const Text('APY + 7.21',
-                style: TextStyle(fontSize: 14, color: Color(0xFF103611))),
+                style: TextStyle(fontSize: 14, 
+                color: Color(0xFF103611))),
           ],
         ),
       ],
@@ -174,12 +188,13 @@ class MyHomePageState extends State<MyHomePage> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          const SizedBox(height: 30),
+          const SizedBox(height: 10),
           const Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text('Portfolio',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20)),
+                  style: TextStyle
+                  (fontWeight: FontWeight.bold, fontSize: 20)),
               Icon(Icons.more_vert, size: 28),
             ],
           ),
@@ -273,11 +288,13 @@ class MyHomePageState extends State<MyHomePage> {
                   children: [
                     Text(titles[i],
                         style: const TextStyle(
-                            fontWeight: FontWeight.bold, fontSize: 19)),
+                            fontWeight: FontWeight.bold,
+                            fontSize: 19)),
                     const SizedBox(height: 2.0),
                     Text(subtitles[i],
                         style: const TextStyle(
-                            color: Color(0xFF282828), fontSize: 14)),
+                            color: Color(0xFF282828),
+                            fontSize: 14)),
                   ],
                 ),
               ),
@@ -286,10 +303,12 @@ class MyHomePageState extends State<MyHomePage> {
                 children: [
                   Text(values[i],
                       style: const TextStyle(
-                          fontWeight: FontWeight.bold, fontSize: 19)),
+                          fontWeight: FontWeight.bold,
+                          fontSize: 19)),
                   const SizedBox(height: 2.0),
                   Text(details[i],
-                      style: TextStyle(color: Colors.grey[400], fontSize: 14)),
+                      style: TextStyle(color: Colors.grey[400],
+                      fontSize: 14)),
                 ],
               ),
               const SizedBox(width: 8.0),
@@ -318,7 +337,8 @@ class MyHomePageState extends State<MyHomePage> {
             maxLines: 1,
           ),
           Text(timeFrame,
-              style: TextStyle(color: Colors.white.withOpacity(0.6))),
+              style: TextStyle(color:
+              Colors.white.withOpacity(0.6))),
         ],
       ),
     );

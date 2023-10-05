@@ -11,8 +11,9 @@ final _buttonDecoration = BoxDecoration(
 );
 
 const _buttonTextStyle = TextStyle(
-  fontSize: 24.0,
-  fontWeight: FontWeight.normal,
+  fontSize: 25.0,
+  fontWeight: FontWeight.w500,
+  letterSpacing: -0.7,
   color: Colors.white,
 );
 
@@ -243,7 +244,7 @@ Widget _buildBody() {
                       textColor: Colors.white,
                       backgroundImagePath: 'lib/icons/bnb_2.png',
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 25),
                     SendReceiveWidget(
                       label: "You Send",
                       amount: "12.121",
@@ -251,7 +252,7 @@ Widget _buildBody() {
                   ],
                 ),
               ),
-              SizedBox(width: 50),
+              SizedBox(width: 20),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
@@ -264,7 +265,7 @@ Widget _buildBody() {
                       textColor: Colors.black,
                       backgroundImagePath: 'lib/icons/eth_2.png',
                     ),
-                    SizedBox(height: 10),
+                    SizedBox(height: 20),
                     SendReceiveWidget(
                       label: "You Receive",
                       amount: "1.79067",
@@ -292,14 +293,14 @@ Widget _buildBody() {
               ),
             ],
           ),
-          const SizedBox(height: 20.0),
+          const SizedBox(height: 25.0),
           const SelectionBox(
             label: "WalletConnect",
             iconPath: "lib/icons/wallet-connect.png",
           ),
-          const SizedBox(height: 25.0),
+          const SizedBox(height: 35.0),
           _buildRateBox(),
-          const SizedBox(height: 25.0),
+          const SizedBox(height: 35.0),
           _buildSwapButton(),
         ],
       ),

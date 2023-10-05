@@ -147,10 +147,12 @@ class GetStartedPage extends StatelessWidget {
     borderRadius: BorderRadius.circular(10.0),
   );
   static const _buttonTextStyle = TextStyle(
-    fontSize: 28.0,
-    fontWeight: FontWeight.bold,
-    fontFamily: 'Courier',
-    letterSpacing: -3.0,
+    // // fontFamily: 'Courier',
+    // letterSpacing: -3.0,
+    // fontWeight: FontWeight.bold,
+    fontSize: 25.0,
+    fontWeight: FontWeight.w500,
+    letterSpacing: -0.7,
     color: Colors.white,
   );
 }

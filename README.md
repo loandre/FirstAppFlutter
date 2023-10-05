@@ -1,16 +1,34 @@
-# first_app
+# 📱 Desafio Técnico - UI Mobile Crypto Wallet
 
-A new Flutter project.
+<p><img src="lib/images/img-readme.png" alt="Imagem do Projeto" /></p>
 
-## Getting Started
+Neste projeto, enfrentei o desafio proposto pelo professor, [@jsdaniell](https://github.com/jsdaniell), de recriar uma UI encontrada no Dribbble, usando Flutter, um SDK do qual nunca tive experiência anterior. A experiência foi especialmente desafiadora, dada minha falta de familiaridade prévia com a linguagem. No entanto, ao longo do desenvolvimento, pude perceber o poder e versatilidade do Flutter como ferramenta de desenvolvimento, me surpreendendo positivamente com suas capacidades.
 
-This project is a starting point for a Flutter application.
+## 🗺️ Roteiro do Desafio
 
-A few resources to get you started if this is your first Flutter project:
+- **Desenvolvimento de UI a partir do Dribbble**:
+  - Criação de uma interface mobile para crypto wallet.
+  - Trabalho com três páginas principais: Get Started Page, Home Page e Swap Page.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+## 🔧 Tecnologias Utilizadas
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- **Flutter**: SDK open-source para criar aplicativos mobile nativos para iOS e Android a partir de um único código-fonte.
+- **Dart**: Linguagem otimizada para desenvolvimento mobile, desktop e web.
+- **Material Design (flutter/material.dart)**: Conjunto de widgets do Flutter que implementa as diretrizes de design material.
+- **AutoSizeText (auto_size_text/auto_size_text.dart)**: Pacote que ajusta dinamicamente o tamanho do texto.
+- **Navegação**: Uso da mecânica de `Navigator` e rotas do Flutter para a transição entre telas.
+- **UI Customizado**: Implementação de design personalizado, gradientes e shaders.
+- **Widgets Personalizados**: Uso extensivo de widgets como `ScaffoldMessenger`, `BottomNavigationBar`, `ListView`, `Stack`, entre outros.
+- **Layout Adaptável**: Adaptação de UI usando `MediaQuery` de acordo com as dimensões do dispositivo.
+
+## 🎞️ Apresentação Visual do Projeto
+[Link para o vídeo aqui](URL_DO_VÍDEO)
+
+## ⚙️ Como Executar o Projeto
+1. Clone o repositório: `git clone [url-do-repositório]`.
+2. Entre no diretório do projeto: `cd [nome-do-projeto]`.
+3. Baixe as dependências: `flutter pub get`.
+4. Inicie o app: `flutter run`.
+
+## ✨  Agradecimentos
+Agradeço ao professor José Daniel por propor este desafio e à LDC Serviços de Mídia Ltda por proporcionar essa oportunidade desafiadora, que certamente ampliou meus horizontes no mundo da programação.
