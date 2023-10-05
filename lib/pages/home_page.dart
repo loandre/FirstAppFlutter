@@ -6,11 +6,14 @@ import 'swap_now.dart';
 // ------------------- CONSTANTS -------------------
 const _defaultPaddingValue = 16.0;
 const _backgroundGradientColors = [
-  Color(0xFF1b323f),
-  Color(0xFFa8c0ce),
-  Color(0xFF7990bc),
+  Color(0xFF153435),
+  Color(0xFF1e484a),
+  Color(0xFFc7e3f2),
+  Color(0xFFeff6fa),
+  Color(0xFF607499),
+  Color(0xFF596d94),
 ];
-const _backgroundGradientStops = [0.0, 0.6, 1.0];
+const _backgroundGradientStops = [0.0, 0.2, 0.3, 0.4, 0.6, 1.0]; 
 const _gradientColors = [
   Color(0xFF90A9DD),
   Color(0xFF827EDA),
@@ -18,6 +21,8 @@ const _gradientColors = [
 
 // ------------------- MAIN WIDGET -------------------
 class MyHomePage extends StatefulWidget {
+  const MyHomePage({super.key});
+
   @override
   _MyHomePageState createState() => _MyHomePageState();
 }
@@ -28,11 +33,11 @@ class _MyHomePageState extends State<MyHomePage> {
   int _currentIndex = 0;
 
   Shader _gradientTextShader() {
-    return LinearGradient(
+    return const LinearGradient(
       colors: _gradientColors,
       begin: Alignment.topLeft,
       end: Alignment.bottomRight,
-    ).createShader(Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
+    ).createShader(const Rect.fromLTWH(0.0, 0.0, 200.0, 70.0));
   }
 
   Widget _gradientIcon(IconData data) {
@@ -76,25 +81,35 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildBody() {
-    return Container(
-      decoration: _backgroundDecoration(),
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(_defaultPaddingValue),
-            child: Column(
-              children: [
-                _buildTopBar(),
-                const SizedBox(height: 70),
-                _buildMiddleContent(),
-                _buildStatisticBoxes(),
-                const SizedBox(height: 20),
-              ],
-            ),
+    return Stack(
+      children: [
+        Positioned(
+          top: 0,
+          left: 0,
+          right: 0,
+          bottom: MediaQuery.of(context).size.height * 0.4,
+          child: Container(
+            decoration: _backgroundDecoration(),
           ),
-          Flexible(child: _buildPortfolio()),
-        ],
-      ),
+        ),
+        Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(_defaultPaddingValue),
+              child: Column(
+                children: [
+                  _buildTopBar(),
+                  const SizedBox(height: 70),
+                  _buildMiddleContent(),
+                  _buildStatisticBoxes(),
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+            Flexible(child: _buildPortfolio()),
+          ],
+        ),
+      ],
     );
   }
 
@@ -193,7 +208,7 @@ class _MyHomePageState extends State<MyHomePage> {
         if (index == 2) {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => SwapNowPage()),
+            MaterialPageRoute(builder: (context) => const SwapNowPage()),
           );
         } else {
           setState(() => _currentIndex = index);
@@ -204,7 +219,7 @@ class _MyHomePageState extends State<MyHomePage> {
       selectedLabelStyle: TextStyle(
         foreground: Paint()..shader = _gradientTextShader(),
       ),
-      unselectedLabelStyle: TextStyle(color: const Color(0xFF3c3c3c)),
+      unselectedLabelStyle: const TextStyle(color: Color(0xFF3c3c3c)),
       showSelectedLabels: true,
       showUnselectedLabels: true,
       items: [
@@ -309,7 +324,7 @@ class _MyHomePageState extends State<MyHomePage> {
         children: [
           AutoSizeText(
             value,
-            style: const TextStyle(fontSize: 18.2, color: Colors.white),
+            style: const TextStyle(fontSize: 16, color: Colors.white),
             maxLines: 1,
           ),
           Text(timeFrame,
@@ -324,14 +339,14 @@ class _MyHomePageState extends State<MyHomePage> {
     return BottomNavigationBarItem(
       icon: Padding(
         padding:
-            const EdgeInsets.only(bottom: 4.0), // Adicionando espaçamento aqui
+            const EdgeInsets.only(bottom: 4.0),
         child: iconData != null
             ? Icon(iconData)
             : Image.asset(imagePath!, width: 24, height: 24),
       ),
       activeIcon: Padding(
         padding:
-            const EdgeInsets.only(bottom: 4.0), // Adicionando espaçamento aqui
+            const EdgeInsets.only(bottom: 4.0),
         child: iconData != null
             ? _gradientIcon(iconData)
             : _gradientImage(imagePath!),
@@ -409,7 +424,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   BoxDecoration _statisticBoxDecoration() {
     return BoxDecoration(
-      color: Colors.grey.shade800.withOpacity(0.5),
+      color: Colors.grey.shade800.withOpacity(0.6),
       borderRadius: BorderRadius.circular(12),
     );
   }

@@ -110,7 +110,7 @@ class GetStartedPage extends StatelessWidget {
   void _navigateToHomePage(BuildContext context) {
     Navigator.push(
       context,
-      MaterialPageRoute(builder: (context) => MyHomePage()),
+      MaterialPageRoute(builder: (context) => const MyHomePage()),
     );
   }
 
