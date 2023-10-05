@@ -42,6 +42,8 @@ flutter:
   assets:
   - lib/images/
   - lib/icons/
+  - lib/icons/bnb_2.png
+  - lib/icons/eth_2.png
   
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

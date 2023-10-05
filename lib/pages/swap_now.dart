@@ -12,7 +12,19 @@ final _buttonDecoration = BoxDecoration(
 
 const _buttonTextStyle = TextStyle(
   fontSize: 24.0,
+  fontWeight: FontWeight.normal,
   color: Colors.white,
+);
+
+const _rateTextStyle = TextStyle(
+  fontSize: 16,
+  color: Colors.black,
+);
+
+const _boldRateTextStyle = TextStyle(
+  fontSize: 16,
+  fontWeight: FontWeight.bold,
+  color: Colors.black,
 );
 
 // ------------------- MAIN WIDGET -------------------
@@ -22,240 +34,337 @@ class SwapNowPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: _buildAppBar(context),
+      backgroundColor: Colors.white,
+      appBar: const AppBarWidget(),
       body: _buildBody(),
     );
   }
+}
 
-// ------------------- INTERFACE METHODS -------------------
-  AppBar _buildAppBar(BuildContext context) {
+class AppBarWidget extends StatelessWidget implements PreferredSizeWidget {
+  const AppBarWidget({super.key});
+
+  @override
+  Size get preferredSize => const Size.fromHeight(70.0);
+
+  @override
+  Widget build(BuildContext context) {
     return AppBar(
-      leading: IconButton(
-        icon: const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black),
-        onPressed: () => Navigator.pop(context),
+      toolbarHeight: 70,
+      leading: Padding(
+        padding: const EdgeInsets.only(top: 10.0),
+        child: IconButton(
+          icon:
+              const Icon(Icons.arrow_back_ios_new_rounded, color: Colors.black),
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       backgroundColor: Colors.white,
-      title: const Text('Swap', style: TextStyle(color: Colors.black)),
+      title: const Padding(
+        padding: EdgeInsets.only(top: 10.0),
+        child: Text('Swap', style: TextStyle(color: Colors.black)),
+      ),
       centerTitle: true,
-      elevation: 1.0,
+      elevation: 0.0,
       actions: const [
         Padding(
-          padding: EdgeInsets.all(8.0),
+          padding: EdgeInsets.only(right: 8.0, top: 10.0),
           child: Icon(Icons.settings_outlined, color: Colors.black),
         ),
       ],
     );
   }
+}
 
-  Widget _buildBody() {
-    return SingleChildScrollView(
-      child: Padding(
-        padding: const EdgeInsets.all(20.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            _buildCryptoRow(),
-            const SizedBox(height: 40.0),
-            _buildDropdownRow(),
-            const SizedBox(height: 20.0),
-            _buildWalletDropdown(),
-            const SizedBox(height: 20.0),
-            _buildRateBox(),
-            const SizedBox(height: 20.0),
-            _buildSwapButton(),
-          ],
-        ),
-      ),
-    );
-  }
+class CryptoBox extends StatelessWidget {
+  final String cryptoName;
+  final String percentageChange;
+  final String value;
+  final Color boxColor;
+  final Color textColor;
+  final String? backgroundImagePath;
 
-  Row _buildCryptoRow() {
-    return Row(
-      children: [
-        Expanded(child: _cryptoCard('BNB', '+6.21%', '21.917')),
-        const SizedBox(width: 20.0),
-        Expanded(child: _cryptoCard('ETH', '+11.23%', '1.243')),
-      ],
-    );
-  }
+  const CryptoBox({
+    Key? key,
+    required this.cryptoName,
+    required this.percentageChange,
+    required this.value,
+    required this.boxColor,
+    required this.textColor,
+    this.backgroundImagePath,
+  }) : super(key: key);
 
-  Row _buildDropdownRow() {
-    return Row(
-      children: [
-        Expanded(child: _buildDropdown("BNB")),
-        const SizedBox(width: 20.0),
-        Expanded(child: _buildDropdown("ETH")),
-      ],
-    );
-  }
-
-  Widget _buildWalletDropdown() {
-    return SizedBox(
-      width: double.infinity,
-      child: _buildDropdown("WalletConnect"),
-    );
-  }
-
-  Container _buildSwapButton() {
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      decoration: _buttonDecoration,
-      child: TextButton(
-        onPressed: () {
-          // Implement swap logic here
-        },
-        style: TextButton.styleFrom(
-          foregroundColor: Colors.white,
-          padding: const EdgeInsets.symmetric(vertical: 20),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(10),
-          ),
-        ),
-        child: _buildSwapButtonContent(),
+      height: 180,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: boxColor,
+        borderRadius: BorderRadius.circular(10),
+        image: backgroundImagePath != null
+            ? DecorationImage(
+                image: AssetImage(backgroundImagePath!),
+                fit: BoxFit.cover,
+              )
+            : null,
       ),
-    );
-  }
-
-  Row _buildSwapButtonContent() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        Image.asset('lib/icons/arrow_3.png', height: 24.0),
-        const SizedBox(width: 8.0),
-        const Text('Swap now', style: _buttonTextStyle),
-      ],
-    );
-  }
-
-// ------------------- HELPER METHODS -------------------
-
-  Widget _cryptoCard(String title, String percentage, String value) {
-    const titleStyle = TextStyle(
-      fontSize: 20.0,
-      color: Colors.white,
-      fontWeight: FontWeight.bold,
-    );
-
-    const valueStyle = TextStyle(
-      fontSize: 24.0,
-      fontWeight: FontWeight.bold,
-      color: Colors.white,
-    );
-
-    final percentageColor =
-        percentage.contains('+') ? Colors.green : Colors.red;
-    final percentageStyle = TextStyle(color: percentageColor, fontSize: 16.0);
-
-    final cardDecoration = BoxDecoration(
-      gradient: LinearGradient(
-        begin: Alignment.topLeft,
-        end: Alignment.bottomRight,
-        colors: [Colors.blueGrey[700]!, Colors.black],
-      ),
-      borderRadius: BorderRadius.circular(20.0),
-    );
-
-    return Container(
-      padding: const EdgeInsets.all(20.0),
-      decoration: cardDecoration,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildTitleAndPercentageRow(
-              title, titleStyle, percentage, percentageStyle),
-          const SizedBox(height: 10.0),
-          Text(value, style: valueStyle),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                cryptoName,
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              Text(
+                percentageChange,
+                style: TextStyle(
+                  color: textColor,
+                  fontSize: 15,
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 8),
+          Text(
+            value,
+            style: TextStyle(
+              color: textColor,
+              fontSize: 22,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
         ],
       ),
     );
   }
+}
 
-  Row _buildTitleAndPercentageRow(String title, TextStyle titleStyle,
-      String percentage, TextStyle percentageStyle) {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+class SendReceiveWidget extends StatelessWidget {
+  final String label;
+  final String amount;
+
+  const SendReceiveWidget({
+    Key? key,
+    required this.label,
+    required this.amount,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(title, style: titleStyle),
-        Text(percentage, style: percentageStyle),
+        Text(
+          label,
+          style: const TextStyle(
+            color: Color(0xFF5e5e5e),
+            fontSize: 14,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 8),
+        Text(
+          amount,
+          style: const TextStyle(
+            color: Colors.black,
+            fontSize: 20,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
       ],
     );
   }
+}
 
-  Widget _buildDropdown(String value) {
+class SelectionBox extends StatelessWidget {
+  final String label;
+  final String iconPath;
+
+  const SelectionBox({
+    Key? key,
+    required this.label,
+    required this.iconPath,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return Container(
-      height: 60.0,
-      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 5),
+      height: 70,
+      padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 20),
       decoration: BoxDecoration(
-        border: Border.all(color: Colors.grey[300]!),
-        borderRadius: BorderRadius.circular(10),
-      ),
-      child: DropdownButtonHideUnderline(
-        child: DropdownButton<String>(
-          value: value,
-          isDense: true,
-          onChanged: (newValue) {
-            // Handle change
-          },
-          items: ["BNB", "ETH", "WalletConnect"]
-              .map<DropdownMenuItem<String>>((String value) {
-            return DropdownMenuItem<String>(
-              value: value,
-              child: Row(
-                children: [
-                  _getIconForValue(value),
-                  const SizedBox(width: 10.0),
-                  Text(value),
-                ],
-              ),
-            );
-          }).toList(),
-        ),
-      ),
-    );
-  }
-
-  Widget _getIconForValue(String value) {
-    String assetName;
-    switch (value) {
-      case "BNB":
-        assetName = 'lib/icons/bnb-binancecoin-bw.png';
-        break;
-      case "ETH":
-        assetName = 'lib/icons/eth-ethereum-bw.png';
-        break;
-      case "WalletConnect":
-        assetName = 'lib/icons/wallet-connect.png';
-        break;
-      default:
-        return const SizedBox.shrink();
-    }
-
-    return Image.asset(assetName, height: 16.0, fit: BoxFit.contain);
-  }
-
-  Widget _buildRateBox() {
-    return Container(
-      padding: const EdgeInsets.all(15.0),
-      decoration: BoxDecoration(
-        color: Colors.grey[200], // Use a more appropriate color
+        color: Colors.grey[200],
         borderRadius: BorderRadius.circular(10.0),
       ),
-      child: const Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text("Rate",
-              style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold)),
-          SizedBox(height: 10.0),
-          Text("6.75722 BNB = 1 ETH"),
-          SizedBox(height: 10.0),
-          Text("Slippage Tolerance", style: TextStyle(color: Colors.grey)),
-          SizedBox(height: 5.0),
-          Text("0.5%"),
-          SizedBox(height: 10.0),
-          Text("Liquidity Provider Fee", style: TextStyle(color: Colors.grey)),
-          SizedBox(height: 5.0),
-          Text("0.02802 BNB"),
+          Row(
+            children: [
+              Image.asset(iconPath, height: 24.0),
+              const SizedBox(width: 10),
+              Text(label, style: const TextStyle(fontSize: 16)),
+            ],
+          ),
+          const Icon(Icons.keyboard_arrow_down),
         ],
       ),
     );
   }
+}
+
+// ------------------- INTERFACE METHODS -------------------
+Widget _buildBody() {
+  return SingleChildScrollView(
+    child: Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          const SizedBox(height: 10.0),
+          const Row(
+            children: [
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CryptoBox(
+                      cryptoName: "BNB",
+                      percentageChange: "+6.21%",
+                      value: "21.917",
+                      boxColor: Color(0xFF17232F),
+                      textColor: Colors.white,
+                      backgroundImagePath: 'lib/icons/bnb_2.png',
+                    ),
+                    SizedBox(height: 10),
+                    SendReceiveWidget(
+                      label: "You Send",
+                      amount: "12.121",
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(width: 50),
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    CryptoBox(
+                      cryptoName: "ETH",
+                      percentageChange: "+11.23%",
+                      value: "1.243",
+                      boxColor: Color(0xFFD8E1F1),
+                      textColor: Colors.black,
+                      backgroundImagePath: 'lib/icons/eth_2.png',
+                    ),
+                    SizedBox(height: 10),
+                    SendReceiveWidget(
+                      label: "You Receive",
+                      amount: "1.79067",
+                    ),
+                  ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 25.0),
+          const Row(
+            children: [
+              Expanded(
+                child: SelectionBox(
+                  label: "BNB",
+                  iconPath: "lib/icons/bnb-binancecoin-bw.png",
+                ),
+              ),
+              SizedBox(width: 20.0),
+              Expanded(
+                child: SelectionBox(
+                  label: "ETH",
+                  iconPath: "lib/icons/eth-ethereum-bw.png",
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 20.0),
+          const SelectionBox(
+            label: "WalletConnect",
+            iconPath: "lib/icons/wallet-connect.png",
+          ),
+          const SizedBox(height: 25.0),
+          _buildRateBox(),
+          const SizedBox(height: 25.0),
+          _buildSwapButton(),
+        ],
+      ),
+    ),
+  );
+}
+
+Container _buildSwapButton() {
+  return Container(
+    decoration: _buttonDecoration,
+    child: TextButton(
+      onPressed: () {
+        // Implement swap logic here
+      },
+      style: TextButton.styleFrom(
+        foregroundColor: Colors.white,
+        padding: const EdgeInsets.symmetric(vertical: 20),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+      ),
+      child: _buildSwapButtonContent(),
+    ),
+  );
+}
+
+Row _buildSwapButtonContent() {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.center,
+    children: [
+      Image.asset('lib/icons/arrow_3.png', height: 25.0),
+      const SizedBox(width: 8.0),
+      const Text('Swap now', style: _buttonTextStyle),
+    ],
+  );
+}
+
+Widget _buildRateBox() {
+  return Container(
+    padding: const EdgeInsets.all(15.0),
+    decoration: BoxDecoration(
+      color: Colors.grey[200],
+      borderRadius: BorderRadius.circular(10.0),
+    ),
+    child: Column(
+      children: [
+        _buildRateRow("Rate", "6.75722 BNB = 1 ETH", bold: true),
+        const SizedBox(height: 25.0),
+        _buildRateRow("Slippage Tolerance", "0.5%"),
+        const SizedBox(height: 25.0),
+        _buildRateRow("Liquidity Provider Fee", "0.02802 BNB"),
+      ],
+    ),
+  );
+}
+
+Row _buildRateRow(String leftText, String rightText, {bool bold = false}) {
+  return Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
+      Text(
+        leftText,
+        style: bold ? _boldRateTextStyle : _rateTextStyle,
+      ),
+      Text(rightText),
+    ],
+  );
 }
