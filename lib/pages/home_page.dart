@@ -13,7 +13,7 @@ const _backgroundGradientColors = [
   Color(0xFF607499),
   Color(0xFF596d94),
 ];
-const _backgroundGradientStops = [0.0, 0.2, 0.3, 0.4, 0.6, 1.0]; 
+const backgroundGradientStops = [0.0, 0.2, 0.3, 0.4, 0.6, 1.0];
 const _gradientColors = [
   Color(0xFF90A9DD),
   Color(0xFF827EDA),
@@ -24,10 +24,10 @@ class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key});
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  MyHomePageState createState() => MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
+class MyHomePageState extends State<MyHomePage> {
   final GlobalKey<ScaffoldMessengerState> _scaffoldMessengerKey =
       GlobalKey<ScaffoldMessengerState>();
   int _currentIndex = 0;
@@ -81,35 +81,25 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   Widget _buildBody() {
-    return Stack(
-      children: [
-        Positioned(
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: MediaQuery.of(context).size.height * 0.4,
-          child: Container(
-            decoration: _backgroundDecoration(),
-          ),
-        ),
-        Column(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(_defaultPaddingValue),
-              child: Column(
-                children: [
-                  _buildTopBar(),
-                  const SizedBox(height: 70),
-                  _buildMiddleContent(),
-                  _buildStatisticBoxes(),
-                  const SizedBox(height: 20),
-                ],
-              ),
+    return Container(
+      decoration: _backgroundDecoration(),
+      child: Column(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(MediaQuery.of(context).size.width * 0.04),
+            child: Column(
+              children: [
+                _buildTopBar(),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.1),
+                _buildMiddleContent(),
+                _buildStatisticBoxes(),
+                SizedBox(height: MediaQuery.of(context).size.height * 0.02),
+              ],
             ),
-            Flexible(child: _buildPortfolio()),
-          ],
-        ),
-      ],
+          ),
+          Flexible(child: _buildPortfolio()),
+        ],
+      ),
     );
   }
 
@@ -338,15 +328,13 @@ class _MyHomePageState extends State<MyHomePage> {
       {IconData? iconData, String? imagePath, required String label}) {
     return BottomNavigationBarItem(
       icon: Padding(
-        padding:
-            const EdgeInsets.only(bottom: 4.0),
+        padding: const EdgeInsets.only(bottom: 4.0),
         child: iconData != null
             ? Icon(iconData)
             : Image.asset(imagePath!, width: 24, height: 24),
       ),
       activeIcon: Padding(
-        padding:
-            const EdgeInsets.only(bottom: 4.0),
+        padding: const EdgeInsets.only(bottom: 4.0),
         child: iconData != null
             ? _gradientIcon(iconData)
             : _gradientImage(imagePath!),
