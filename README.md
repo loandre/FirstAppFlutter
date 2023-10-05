@@ -21,9 +21,6 @@ Neste projeto, enfrentei o desafio proposto pelo professor, [@jsdaniell](https:/
 - **Widgets Personalizados**: Uso extensivo de widgets como `ScaffoldMessenger`, `BottomNavigationBar`, `ListView`, `Stack`, entre outros.
 - **Layout Adaptável**: Adaptação de UI usando `MediaQuery` de acordo com as dimensões do dispositivo.
 
-## 🎞️ Apresentação Visual do Projeto
-[Link para o vídeo aqui](URL_DO_VÍDEO)
-
 ## ⚙️ Como Executar o Projeto
 1. Clone o repositório: `git clone [url-do-repositório]`.
 2. Entre no diretório do projeto: `cd [nome-do-projeto]`.
